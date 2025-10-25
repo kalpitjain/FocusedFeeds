@@ -60,3 +60,11 @@ a[href*="/shorts/"] {
   pointer-events: none !important;
   opacity: 0 !important;
 }
+
+/* Hide comments section */
+ytd-comments,
+#comments,
+ytd-comments#comments,
+ytd-item-section-renderer#sections > #contents > ytd-comments {
+  display: none !important;
+}

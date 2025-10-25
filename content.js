@@ -68,12 +68,29 @@ function removeShorts() {
   });
 }
 
+// Function to remove comments section
+function removeComments() {
+  // Remove comments section
+  const comments = document.querySelector("ytd-comments#comments");
+  if (comments) {
+    comments.style.display = "none";
+  }
+
+  // Alternative selectors for comments
+  const commentSelectors = document.querySelectorAll("ytd-comments, #comments");
+  commentSelectors.forEach((element) => {
+    element.style.display = "none";
+  });
+}
+
 // Run on initial page load
 checkAndRedirectShorts();
 removeShorts();
+removeComments();
 
 // Listen for YouTube's navigation events (for SPA page changes)
 document.addEventListener("yt-navigate-finish", () => {
   checkAndRedirectShorts();
   removeShorts();
+  removeComments();
 });
