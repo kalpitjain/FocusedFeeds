@@ -8,7 +8,13 @@ ytd-rich-shelf-renderer[is-shorts] {
 
 /* Hide Shorts in navigation/sidebar */
 ytd-guide-entry-renderer a[href*="/shorts"],
-ytd-guide-entry-renderer:has(a[href*="/shorts"]) {
+ytd-guide-entry-renderer:has(a[href*="/shorts"]),
+ytd-guide-entry-renderer a[title="Shorts"],
+ytd-guide-entry-renderer:has(a[title="Shorts"]),
+ytd-guide-entry-renderer:has(yt-formatted-string.title:is(:contains("Shorts"))),
+ytd-guide-section-renderer
+  ytd-guide-entry-renderer[is-primary]
+  a[title="Shorts"] {
   display: none !important;
 }
 
