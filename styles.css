@@ -18,6 +18,16 @@ ytd-guide-section-renderer
   display: none !important;
 }
 
+/* Hide Shorts in mini-guide/collapsed sidebar */
+ytd-mini-guide-entry-renderer a[href*="/shorts"],
+ytd-mini-guide-entry-renderer:has(a[href*="/shorts"]),
+ytd-mini-guide-entry-renderer a[title="Shorts"],
+ytd-mini-guide-entry-renderer:has(a[title="Shorts"]),
+ytd-mini-guide-entry-renderer a[aria-label="Shorts"],
+ytd-mini-guide-entry-renderer:has(a[aria-label="Shorts"]) {
+  display: none !important;
+}
+
 /* Hide Shorts in search results */
 ytd-video-renderer:has(a[href*="/shorts/"]),
 ytd-grid-video-renderer:has(a[href*="/shorts/"]) {
