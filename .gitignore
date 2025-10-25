@@ -1,0 +1,13 @@
+# Chrome extension packaging
+*.pem
+*.crx
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

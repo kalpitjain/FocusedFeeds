@@ -1,0 +1,46 @@
+/* YouTube Shorts Remover - CSS */
+
+/* Hide Shorts shelf */
+ytd-reel-shelf-renderer,
+ytd-rich-shelf-renderer[is-shorts] {
+  display: none !important;
+}
+
+/* Hide Shorts in navigation/sidebar */
+ytd-guide-entry-renderer a[href*="/shorts"],
+ytd-guide-entry-renderer:has(a[href*="/shorts"]) {
+  display: none !important;
+}
+
+/* Hide Shorts in search results */
+ytd-video-renderer:has(a[href*="/shorts/"]),
+ytd-grid-video-renderer:has(a[href*="/shorts/"]) {
+  display: none !important;
+}
+
+/* Hide Shorts in subscription feed */
+ytd-rich-section-renderer:has([is-shorts]) {
+  display: none !important;
+}
+
+/* Hide Shorts in sidebar */
+ytd-compact-video-renderer:has(a[href*="/shorts/"]) {
+  display: none !important;
+}
+
+/* Hide Shorts items in grids */
+ytd-rich-item-renderer:has(a[href*="/shorts/"]) {
+  display: none !important;
+}
+
+/* Hide mobile Shorts */
+ytm-reel-shelf-renderer,
+ytm-shorts-lockup-view-model-v2 {
+  display: none !important;
+}
+
+/* Hide any link containing /shorts/ */
+a[href*="/shorts/"] {
+  pointer-events: none !important;
+  opacity: 0 !important;
+}
