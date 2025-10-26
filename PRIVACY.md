@@ -52,7 +52,7 @@ If we ever change our data practices, we will update this privacy policy and not
 ## Open Source
 
 FocusedFeeds is open source. You can review the complete source code at:
-https://github.com/kalpitjain/no-shorts
+https://github.com/kalpitjain/FocusedFeeds
 
 ## Contact
 
