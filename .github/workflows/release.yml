@@ -1,0 +1,67 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Create extension package
+        run: |
+          zip -r focusedfeeds-${{ steps.get_version.outputs.VERSION }}.zip \
+            manifest.json \
+            content.js \
+            styles.css \
+            logo.png \
+            -x "*.git*"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: FocusedFeeds ${{ steps.get_version.outputs.VERSION }}
+          body: |
+            ## What's Changed
+
+            Remove YouTube Shorts and Instagram Reels from your browsing experience.
+
+            ### Installation
+            1. Download the `focusedfeeds-${{ steps.get_version.outputs.VERSION }}.zip` file below
+            2. Unzip the file
+            3. Open Chrome and go to `chrome://extensions/`
+            4. Enable **Developer mode** (toggle in top-right corner)
+            5. Click **Load unpacked** and select the unzipped folder
+
+            ### Features
+            - Removes YouTube Shorts from all feeds
+            - Blocks Instagram Reels and Explore
+            - Auto-redirects Shorts URLs
+            - No permissions required
+
+            **Chrome Web Store**: [Coming Soon]
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./focusedfeeds-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_name: focusedfeeds-${{ steps.get_version.outputs.VERSION }}.zip
+          asset_content_type: application/zip

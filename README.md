@@ -23,9 +23,20 @@ A lightweight Chrome extension that removes all YouTube Shorts and Instagram Ree
 
 ## Installation
 
-### Load Unpacked (Developer Mode)
+### From GitHub Releases (Recommended)
 
-1. Download or clone this repository
+1. Go to the [Releases page](https://github.com/kalpitjain/FocusedFeeds/releases)
+2. Download the latest `focusedfeeds-vX.X.X.zip` file
+3. Unzip the file to a permanent location on your computer
+4. Open Chrome and go to `chrome://extensions/`
+5. Enable **Developer mode** (toggle in top-right corner)
+6. Click **Load unpacked**
+7. Select the unzipped folder containing `manifest.json`
+8. The extension is now active!
+
+### From Source (Development)
+
+1. Clone this repository: `git clone https://github.com/kalpitjain/FocusedFeeds.git`
 2. Open Chrome and go to `chrome://extensions/`
 3. Enable **Developer mode** (toggle in top-right corner)
 4. Click **Load unpacked**
@@ -88,9 +99,40 @@ This extension requires **no special permissions** - it only runs content script
 - Minimal performance impact
 - No unnecessary permissions
 
-## Files
+## Development
 
-- `manifest.json` - Extension configuration
-- `content.js` - Removes Shorts and Reels elements
-- `styles.css` - CSS rules to hide Shorts and Reels
-- `README.md` - Documentation
+### Building a Release
+
+To create a release package manually:
+
+```bash
+zip -r focusedfeeds-v1.0.0.zip manifest.json content.js styles.css logo.png
+```
+
+### Automated Releases
+
+This project uses GitHub Actions to automatically create releases:
+
+1. Update the version in `manifest.json`
+2. Commit and push your changes
+3. Create and push a new tag:
+   ```bash
+   git tag -a v1.0.0 -m "Release version 1.0.0"
+   git push origin v1.0.0
+   ```
+4. GitHub Actions will automatically:
+   - Build the extension package
+   - Create a GitHub Release
+   - Attach the ZIP file for download
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is open source and available under the MIT License.
+
+## Support
+
+If you encounter any issues or have suggestions, please [open an issue](https://github.com/kalpitjain/no-shorts/issues) on GitHub.
