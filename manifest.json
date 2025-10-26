@@ -1,12 +1,18 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Shorts Remover",
-  "version": "1.0.0",
-  "description": "Removes YouTube Shorts from your YouTube experience",
+  "name": "FocusedFeeds",
+  "version": "2.0.0",
+  "description": "Removes YouTube Shorts and Instagram Reels from your browsing experience",
   "permissions": [],
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.instagram.com/*"],
       "js": ["content.js"],
       "css": ["styles.css"],
       "run_at": "document_start"

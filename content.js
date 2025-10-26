@@ -1,55 +1,67 @@
-// Function to check and redirect Shorts URLs immediately
+// FocusedFeeds
+
+const YOUTUBE_SUBSCRIPTIONS_URL = "https://www.youtube.com/feed/subscriptions";
+const INSTAGRAM_INBOX_URL = "https://www.instagram.com/direct/inbox/";
+
+// Redirect YouTube Shorts to subscriptions
 function checkAndRedirectShorts() {
   if (window.location.pathname.includes("/shorts/")) {
-    window.location.replace("https://www.youtube.com/feed/subscriptions");
+    window.location.replace(YOUTUBE_SUBSCRIPTIONS_URL);
   }
 }
 
-// Function to remove Shorts elements
+// Redirect Instagram Reels to inbox
+function checkAndRedirectReels() {
+  if (window.location.pathname.includes("/reels/")) {
+    window.location.replace(INSTAGRAM_INBOX_URL);
+  }
+}
+
+// Redirect Instagram Explore to inbox
+function checkAndRedirectExplore() {
+  const path = window.location.pathname;
+  if (path.includes("/explore/") || path === "/explore") {
+    window.location.replace(INSTAGRAM_INBOX_URL);
+  }
+}
+
+// Remove all YouTube Shorts elements
 function removeShorts() {
-  // Remove the "Shorts" button in the sidebar
+  // Remove sidebar Shorts button
   const sidebarShorts = document.querySelectorAll(
     'ytd-guide-entry-renderer a[title="Shorts"], ytd-guide-entry-renderer a[href*="/shorts"]'
   );
   sidebarShorts.forEach((element) => {
     const parent = element.closest("ytd-guide-entry-renderer");
-    if (parent) {
-      parent.remove();
-    }
+    if (parent) parent.remove();
   });
 
-  // Remove the "Shorts" shelf on the homepage
+  // Remove Shorts shelf on homepage
   const shortsShelf = document.querySelectorAll(
     "ytd-reel-shelf-renderer, ytd-rich-shelf-renderer[is-shorts]"
   );
-  shortsShelf.forEach((element) => {
-    element.remove();
-  });
+  shortsShelf.forEach((element) => element.remove());
 
-  // Remove any Shorts videos (those with /shorts/ in their URL)
+  // Remove Shorts videos and prevent clicks
   const shortsVideos = document.querySelectorAll('a[href*="/shorts/"]');
   shortsVideos.forEach((link) => {
-    // Prevent clicking on Shorts links
     link.addEventListener(
       "click",
       (e) => {
         e.preventDefault();
         e.stopPropagation();
-        window.location.href = "https://www.youtube.com/feed/subscriptions";
+        window.location.href = YOUTUBE_SUBSCRIPTIONS_URL;
       },
       { once: true }
     );
 
-    // Find the parent container that holds the video item
     const videoItem = link.closest(
       "ytd-rich-item-renderer, ytd-video-renderer, ytd-grid-video-renderer, ytd-compact-video-renderer"
     );
-    if (videoItem) {
-      videoItem.remove();
-    }
+    if (videoItem) videoItem.remove();
   });
 
-  // Additional selectors for comprehensive removal
+  // Remove Shorts from various locations
   const additionalSelectors = [
     "ytd-rich-section-renderer:has([is-shorts])",
     'ytd-rich-item-renderer:has(a[href*="/shorts/"])',
@@ -60,37 +72,156 @@ function removeShorts() {
 
   additionalSelectors.forEach((selector) => {
     try {
-      const elements = document.querySelectorAll(selector);
-      elements.forEach((element) => element.remove());
+      document
+        .querySelectorAll(selector)
+        .forEach((element) => element.remove());
     } catch (e) {
-      // Some selectors might not work in older browsers, silently continue
+      // Silently continue if selector fails
     }
   });
 }
 
-// Function to remove comments section
+// Hide YouTube comments
 function removeComments() {
-  // Remove comments section
-  const comments = document.querySelector("ytd-comments#comments");
-  if (comments) {
-    comments.style.display = "none";
-  }
-
-  // Alternative selectors for comments
-  const commentSelectors = document.querySelectorAll("ytd-comments, #comments");
+  const commentSelectors = document.querySelectorAll(
+    "ytd-comments#comments, ytd-comments, #comments"
+  );
   commentSelectors.forEach((element) => {
     element.style.display = "none";
   });
 }
 
-// Run on initial page load
-checkAndRedirectShorts();
-removeShorts();
-removeComments();
+// Hide element helper
+function hideElement(element) {
+  if (element) element.style.display = "none";
+}
 
-// Listen for YouTube's navigation events (for SPA page changes)
-document.addEventListener("yt-navigate-finish", () => {
+// Prevent click and redirect helper
+function preventClickAndRedirect(link, redirectUrl) {
+  link.addEventListener(
+    "click",
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      window.location.href = redirectUrl;
+    },
+    { capture: true }
+  );
+}
+
+// Remove Instagram Reels from navigation and feed
+function removeInstagramReels() {
+  // Remove Reels from sidebar navigation
+  const reelsSelectors = [
+    'a[href*="/reels/"]',
+    'a[href="/reels"]',
+    'a[href="#reels"]',
+  ];
+
+  reelsSelectors.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((link) => {
+      if (
+        link.href &&
+        (link.href.includes("/reels") || link.href.endsWith("#reels"))
+      ) {
+        const parent = link.closest('div[role="link"], li, div, a');
+        hideElement(parent);
+      }
+    });
+  });
+
+  // Remove Reels posts from feed
+  document.querySelectorAll('a[href*="/reel/"]').forEach((link) => {
+    const postContainer = link.closest('article, div[role="presentation"]');
+    hideElement(postContainer);
+    preventClickAndRedirect(link, INSTAGRAM_INBOX_URL);
+  });
+
+  // Prevent clicks on all Reels links
+  document
+    .querySelectorAll('a[href*="/reel/"], a[href*="/reels/"]')
+    .forEach((link) => preventClickAndRedirect(link, INSTAGRAM_INBOX_URL));
+}
+
+// Remove Instagram Explore and suggested posts
+function removeInstagramExploreAndSuggested() {
+  // Remove Explore links from navigation
+  const exploreSelectors = [
+    'a[href*="/explore/"]',
+    'a[href="/explore"]',
+    'a[href="#explore"]',
+  ];
+
+  exploreSelectors.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((link) => {
+      if (
+        link.href &&
+        (link.href.includes("/explore") || link.href.endsWith("#explore"))
+      ) {
+        const parent = link.closest('div[role="link"], li, div, a');
+        hideElement(parent);
+      }
+    });
+  });
+
+  // Prevent clicks on Explore links
+  document
+    .querySelectorAll('a[href*="/explore"]')
+    .forEach((link) => preventClickAndRedirect(link, INSTAGRAM_INBOX_URL));
+
+  // Remove "Suggested for you" posts from feed
+  document.querySelectorAll("article").forEach((article) => {
+    const headerElements = article.querySelectorAll("span, div");
+    let isSuggested = false;
+
+    headerElements.forEach((element) => {
+      const text = element.textContent.trim();
+      const suggestedTexts = [
+        "Suggested for you",
+        "Suggested posts",
+        "Suggested",
+      ];
+
+      if (suggestedTexts.includes(text)) {
+        const rect = element.getBoundingClientRect();
+        const articleRect = article.getBoundingClientRect();
+        if (rect.top - articleRect.top < 200) {
+          isSuggested = true;
+        }
+      }
+    });
+
+    if (isSuggested) hideElement(article);
+  });
+}
+
+// Platform detection
+const isYouTube = window.location.hostname.includes("youtube.com");
+const isInstagram = window.location.hostname.includes("instagram.com");
+
+// Handle YouTube content removal
+function handleYouTube() {
   checkAndRedirectShorts();
   removeShorts();
   removeComments();
-});
+}
+
+// Handle Instagram content removal
+function handleInstagram() {
+  checkAndRedirectReels();
+  checkAndRedirectExplore();
+  removeInstagramReels();
+  removeInstagramExploreAndSuggested();
+}
+
+// Initialize
+if (isYouTube) {
+  handleYouTube();
+} else if (isInstagram) {
+  handleInstagram();
+}
+
+// Event listeners
+if (isYouTube) {
+  document.addEventListener("yt-navigate-finish", handleYouTube);
+}

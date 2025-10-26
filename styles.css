@@ -1,24 +1,27 @@
-/* YouTube Shorts Remover - CSS */
+/* FocusedFeeds */
 
-/* Hide Shorts shelf */
+/* === YouTube Shorts === */
+
+/* Shorts shelf and renderers */
 ytd-reel-shelf-renderer,
-ytd-rich-shelf-renderer[is-shorts] {
+ytd-rich-shelf-renderer[is-shorts],
+ytm-reel-shelf-renderer,
+ytm-shorts-lockup-view-model-v2 {
   display: none !important;
 }
 
-/* Hide Shorts in navigation/sidebar */
+/* Navigation and sidebar */
 ytd-guide-entry-renderer a[href*="/shorts"],
 ytd-guide-entry-renderer:has(a[href*="/shorts"]),
 ytd-guide-entry-renderer a[title="Shorts"],
 ytd-guide-entry-renderer:has(a[title="Shorts"]),
-ytd-guide-entry-renderer:has(yt-formatted-string.title:is(:contains("Shorts"))),
 ytd-guide-section-renderer
   ytd-guide-entry-renderer[is-primary]
   a[title="Shorts"] {
   display: none !important;
 }
 
-/* Hide Shorts in mini-guide/collapsed sidebar */
+/* Mini-guide */
 ytd-mini-guide-entry-renderer a[href*="/shorts"],
 ytd-mini-guide-entry-renderer:has(a[href*="/shorts"]),
 ytd-mini-guide-entry-renderer a[title="Shorts"],
@@ -28,43 +31,94 @@ ytd-mini-guide-entry-renderer:has(a[aria-label="Shorts"]) {
   display: none !important;
 }
 
-/* Hide Shorts in search results */
+/* Search results and grids */
 ytd-video-renderer:has(a[href*="/shorts/"]),
-ytd-grid-video-renderer:has(a[href*="/shorts/"]) {
-  display: none !important;
-}
-
-/* Hide Shorts in subscription feed */
-ytd-rich-section-renderer:has([is-shorts]) {
-  display: none !important;
-}
-
-/* Hide Shorts in sidebar */
-ytd-compact-video-renderer:has(a[href*="/shorts/"]) {
-  display: none !important;
-}
-
-/* Hide Shorts items in grids */
+ytd-grid-video-renderer:has(a[href*="/shorts/"]),
 ytd-rich-item-renderer:has(a[href*="/shorts/"]) {
   display: none !important;
 }
 
-/* Hide mobile Shorts */
-ytm-reel-shelf-renderer,
-ytm-shorts-lockup-view-model-v2 {
+/* Subscription feed */
+ytd-rich-section-renderer:has([is-shorts]),
+ytd-compact-video-renderer:has(a[href*="/shorts/"]) {
   display: none !important;
 }
 
-/* Hide any link containing /shorts/ */
+/* Disable clicks */
 a[href*="/shorts/"] {
   pointer-events: none !important;
   opacity: 0 !important;
 }
 
-/* Hide comments section */
+/* === YouTube Comments === */
+
 ytd-comments,
 #comments,
 ytd-comments#comments,
 ytd-item-section-renderer#sections > #contents > ytd-comments {
+  display: none !important;
+}
+
+/* === Instagram Reels === */
+
+/* Navigation links */
+a[href*="/reels/"],
+a[href*="/reels"],
+a[href="#reels"],
+div[role="link"]:has(a[href*="/reels"]),
+nav a[href*="/reels"],
+div[role="menuitem"] a[href*="/reels"] {
+  display: none !important;
+}
+
+/* Feed posts */
+article:has(a[href*="/reel/"]),
+div[role="presentation"]:has(a[href*="/reel/"]) {
+  display: none !important;
+}
+
+/* Parent containers */
+li:has(a[href*="/reels"]),
+div:has(> a[href*="/reels"]):not(article) {
+  display: none !important;
+}
+
+/* Disable clicks */
+*[href*="/reel/"],
+*[href*="/reels/"],
+a[href*="/reel/"] {
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+/* === Instagram Explore === */
+
+/* Navigation links */
+a[href*="/explore/"],
+a[href*="/explore"],
+a[href="#explore"],
+div[role="link"]:has(a[href*="/explore"]),
+nav a[href*="/explore"],
+div[role="menuitem"] a[href*="/explore"] {
+  display: none !important;
+}
+
+/* Parent containers */
+li:has(a[href*="/explore"]),
+div:has(> a[href*="/explore"]):not(article) {
+  display: none !important;
+}
+
+/* Disable clicks */
+*[href*="/explore/"],
+*[href*="/explore"] {
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+/* === Instagram Suggested === */
+
+article[data-suggested="true"],
+div[data-suggested="true"] {
   display: none !important;
 }
