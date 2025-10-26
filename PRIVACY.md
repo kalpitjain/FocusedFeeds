@@ -57,7 +57,7 @@ https://github.com/kalpitjain/no-shorts
 ## Contact
 
 If you have questions about this privacy policy, please contact us by opening an issue on our GitHub repository:
-https://github.com/kalpitjain/no-shorts/issues
+https://github.com/kalpitjain/FocusedFeeds/issues
 
 ## Compliance
 
