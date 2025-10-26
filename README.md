@@ -4,7 +4,7 @@ A lightweight Chrome extension that removes all YouTube Shorts and Instagram Ree
 
 ## Features
 
-### YouTube 🎥
+### YouTube
 
 - **Removes Shorts Button** - Hides Shorts from sidebar, navigation, and mini-guide
 - **Blocks Shorts Shelf** - Removes the Shorts carousel from homepage and feeds
@@ -13,7 +13,7 @@ A lightweight Chrome extension that removes all YouTube Shorts and Instagram Ree
 - **Hides Comments** - Removes the comments section from all YouTube videos
 - **Prevents Clicks** - Blocks clicking on Shorts links throughout the site
 
-### Instagram 📸
+### Instagram
 
 - **Redirects Reels** - Automatically redirects `/reels/` pages to Instagram Direct Messages
 - **Redirects Explore** - Automatically redirects `/explore/` pages to Instagram Direct Messages
@@ -30,7 +30,7 @@ A lightweight Chrome extension that removes all YouTube Shorts and Instagram Ree
 3. Enable **Developer mode** (toggle in top-right corner)
 4. Click **Load unpacked**
 5. Select the extension folder containing `manifest.json`
-6. The extension is now active! 🎉
+6. The extension is now active!
 
 ### Permissions
 
