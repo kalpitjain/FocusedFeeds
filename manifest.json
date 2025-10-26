@@ -1,9 +1,14 @@
 {
   "manifest_version": 3,
   "name": "FocusedFeeds",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "Removes YouTube Shorts and Instagram Reels from your browsing experience",
   "permissions": [],
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],
